@@ -1,0 +1,23 @@
+{
+  "name": "sih",
+  "version": "1.0.0",
+  "description": "This is SIH Project against problem statment given by DRDO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hritikkhurana10sm/sih.git"
+  },
+  "keywords": [
+    "Hritik",
+    "Khurana"
+  ],
+  "author": "Hritik Khurana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hritikkhurana10sm/sih/issues"
+  },
+  "homepage": "https://github.com/hritikkhurana10sm/sih#readme"
+}
