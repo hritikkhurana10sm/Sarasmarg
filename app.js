@@ -1,3 +1,7 @@
+/*
+ Email : team.Sarasmarg@gmail.com
+ Password : Saras10@marg
+*/ 
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,11 +20,17 @@ const middleware = require('./middleware/index');
 const config = require('./config');
 const User = require('./models/user');
 const issues = require('./models/issue');
+const admin = require('./models/admin');
+
 
 // passport JWT
 const jwt = require('jsonwebtoken');
 const passportJWT = require('./config/passport-jwt-strategy');
+const user = require('./models/user');
 
+
+// app.use(express.static(path.join(__dirname, '/views/')));
+app.use(express.static(path.join(__dirname, '/public')));
 // setting up the cookies
 app.use(cookieParser("This is my secret!"));
 
@@ -40,11 +50,9 @@ app.use(
 
     secret: "Hello,This is secret line",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-      maxAge:  3600000 ,
-      secure: false,
-      httpOnly: true
+      secure : false
     }
   }));
 
@@ -70,15 +78,126 @@ mongoose.connect(config.dbUrl, {
 
 //-------ADMIN (BAAP)--------- routes and controllers---------------------
 app.get('/', function (req, res) {
-  res.render("index");
+  res.render("index.ejs");
 })
 
-//get sign in page
-app.get('/signin', function (req, res) {
-  res.render('signin');
+// Authority Pages -------------------------------------
+app.get('/AuthoritySideLogin.ejs', function (req, res) {
+  res.render('AuthoritySideLogin');
 })
 
-// signin post request
+app.get('/AuthoritySideSignUp.ejs' , function(req , res){
+  res.render('AuthoritySideSignUp');
+})
+
+app.get('/AuthoritySideDashboard.ejs' ,async function(req , res){
+
+  const complaints = await issues.find().exec();
+  // console.log('complaints : ', complaints);
+  res.render('AuthoritySideDashboard' , {
+       complaints : complaints
+  });
+})
+
+app.get('/AuthorityGetStartedAs.ejs' , function(req , res){
+  res.render('AuthorityGetStartedAs');
+})
+
+app.get('/AuthorityGetStarted.ejs' , function(req ,res){
+  res.render('AuthorityGetStarted');
+})
+
+app.post('/admin/signup' , async function(req ,res){
+  
+  res.cookie('isLogined', false);
+    
+  var userBody = req.body;
+  console.log("Admin Signup Attemp =>", userBody);
+
+  if (userBody.password) {
+      var newUser = new admin(
+          { username: userBody.username, email: userBody.email, password: userBody.password}
+      );
+
+      await newUser.save()
+          .then(newUser => {
+              console.log(`${newUser} added`);
+          })
+          .catch(err => {
+              console.log(err);
+          });
+      res.redirect('/AuthoritySideLogin.ejs');
+  }
+  else {
+      document.alert(`User cannot be created`);
+  }
+})
+
+
+app.post('/admin/signin' , async function(req , res){
+  var userQuery = req.body;
+  console.log(userQuery);
+
+  try {
+     
+         
+          var adm = await admin.findOne({ email: userQuery.email, password: userQuery.password }).exec();
+          
+          console.log('Admin LoggedIn =>' , adm);
+          if (adm) {
+              
+              res.cookie('isLogined', true);
+              // res.cookie('isAdmin', true);
+              console.log("--------------- > " , adm._id);
+              res.cookie('adminId', adm._id);
+              
+              console.log("Req.Cookies Admin =>" , req.cookies);
+
+              res.redirect('/AuthoritySideDashboard.ejs');
+          }
+          else {
+              // alert(`incorrect login datails`);
+              res.send('login failed');
+           
+          }
+
+      
+     
+  }
+  catch (error) {
+      return console.log('error', error);
+
+  };
+  console.log('after');
+  
+})
+// --------------------------------------------------------
+
+
+
+// WorkerSide ---------------------------------------------
+app.get('/WorkerSideLogin.ejs' , function(req ,res){
+  res.render('WorkerSideLogin');
+})
+
+app.get('/WorkerSideSignUp.ejs' , function(req , res){
+  res.render('WorkerSideSignUp');
+})
+
+app.get('/WorkerSideDashboard.ejs' , function(req , res){
+  res.render('WorkerSideDashboard');
+})
+
+app.get('/WorkerSideGetStartedAs.ejs' , function(req , res){
+  res.render('WorkerSideGetStartedAs');
+})
+// ------------------------------------------------------
+
+
+
+
+
+// DonT ToUcH ThIs PaRt-------------------------------------
 app.post('/signin', function (req, res, next) {
 
 
@@ -278,11 +397,26 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
   const qw = req.params;
   const arr = req.body;
 
+  var us = await user.findById(qw.id).exec();
+  // console.log('us = > ' , us);
+
+  var date = new Date().toLocaleString('en-us',{day : 'numeric',month : "short", year:'numeric'})
+  
+  var hr = new Date().getHours();
+  var min = new Date().getMinutes();
+  var a = (hr <= 12);
+  var str = (a == true ? 'AM' : 'PM');
+  var time = `${hr}:${min} ${str}`
+
   var issue = new issues({
     location: arr.location,
-    description: arr.files,
-    details : arr.description,
-    result : qw.id
+    files: arr.files,
+    description : arr.description,
+    result : qw.id,
+    naam : us.username,
+    email : us.email,
+    date : date,
+    time : time
   });
 
  console.log('complaint ' , issue);

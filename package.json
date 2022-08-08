@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/hritikkhurana10sm/sih#readme",
   "dependencies": {
+    "alert": "^5.1.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
