@@ -2,6 +2,9 @@
  Email : team.Sarasmarg@gmail.com
  Password : Saras10@marg
 */ 
+
+
+// http://www.google.com/maps/place/lat,lng
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -402,12 +405,13 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
 
   var date = new Date().toLocaleString('en-us',{day : 'numeric',month : "short", year:'numeric'})
   
-  var hr = new Date().getHours();
-  var min = new Date().getMinutes();
-  var a = (hr <= 12);
-  var str = (a == true ? 'AM' : 'PM');
-  var time = `${hr}:${min} ${str}`
+  // var hr = new Date().getHours();
+  // var min = new Date().getMinutes();
+  // var a = (hr <= 12);
+  // var str = (a == true ? 'AM' : 'PM');
+  // var time = `${hr}:${min} ${str}`
 
+  var time = new Date().toLocaleTimeString();
   var issue = new issues({
     location: arr.location,
     files: arr.files,
