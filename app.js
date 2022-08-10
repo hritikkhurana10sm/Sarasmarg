@@ -346,12 +346,13 @@ app.post('/user/signin', async function (req, res, next) {
       return res.status(200).json({
 
         message: "Sign in successfully",
-        data: {
-          // encypted
-          token: jwt.sign(user.toJSON(), 'novel', {
-            expiresIn: '1h'
-          })
-        },
+        // data: {
+        //   // encypted
+        //   token: jwt.sign(user.toJSON(), 'novel', {
+        //     expiresIn: '1h'
+        //   })
+        // },
+        token: jwt.sign(user.toJSON(), 'novel'),
         user: user
       })
     }
