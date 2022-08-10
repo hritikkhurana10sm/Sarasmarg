@@ -82,7 +82,8 @@
       <div class="row">
 
         <% complaints.forEach(function(issue){%>
-        <div class="col-lg-4">
+          <form action="/AuthoritySideComplaintsLar" method="post"  class="col-lg-4">
+        <div>
 
           <div class="card">
             <div class="card-body">
@@ -120,11 +121,13 @@
                 <h6><%= issue.description %></h6>
                 <h6>User Name : <%= issue.naam %></h6>
                 <h6>Email Id. : <%= issue.email %></h6>
-                <span class="badge bg-success"><%= issue.status %></span>
+                <input type="hidden" name="issue" value="<%= issue._id %>">
+                <span  class="badge bg-danger"><%= issue.status %></span>
+                <button type="submit" style="border: none;"><span  class="badge bg-success" >Update Status</span></button>
             </div>
           </div>
         </div>
-         
+      </form>
         <%})%>
       </div>
     </section>

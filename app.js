@@ -117,6 +117,10 @@ app.get('/AuthorityGetStarted.ejs' , function(req ,res){
   res.render('AuthorityGetStarted');
 })
 
+app.get('/AuthoritySideComplaintsLar.ejs' , function(req , res){
+  res.render('AuthoritySideComplaintsLar');
+})
+
 app.post('/admin/signup' , async function(req ,res){
   
   res.cookie('isLogined', false);
@@ -180,6 +184,49 @@ app.post('/admin/signin' , async function(req , res){
   };
   console.log('after');
   
+})
+
+app.post('/AuthoritySideComplaintsLar' , async function(req , res){
+    
+    const id = req.body.issue;
+    // console.log("id  = > " , id);
+    const complaint = await issues.findById(id).exec();
+    // return res.render('../../AuthoritySideComplaintsLar.ejs' , {
+    //     complaint : complaint
+    // })
+    return res.render('AuthoritySideComplaintsLar' , {
+      issue : complaint
+    });
+})
+
+app.post('/AuthoritySideDashboard'  , async function(req , res){
+  var qw = req.body.id;
+ 
+  try {
+      
+      var complaint = await issues.findById(qw).exec();
+
+      complaint.status = req.body.status;
+      
+
+
+      try {
+              await complaint.save()
+              .then(complaint => {
+                  console.log(`${complaint} updated`);
+
+                  return res.redirect('./AuthoritySideDashboard.ejs');
+              })
+              .catch(err => {
+                  console.log(err);
+              });;
+
+      }
+      catch (error) {
+          console.log(error);
+      }
+  }
+  catch (error) { console.log(error); }
 })
 // --------------------------------------------------------
 
