@@ -41,6 +41,11 @@ app.use(cookieParser("This is my secret!"));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
 
+const cors = require('cors');
+app.use(cors({
+  origin: '*'
+}));
+
 app.use(bodyparser.urlencoded({
   extended: true
 }))
