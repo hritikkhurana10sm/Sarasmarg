@@ -446,9 +446,7 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
 
 
 // testing for expiry time
-app.get('/data'  ,passport.authenticate('jwt', {
-  session: false
-}) , async function(req ,res){
+app.get('/data'  , async function(req ,res){
 
   var user = await User.find().exec();
    
