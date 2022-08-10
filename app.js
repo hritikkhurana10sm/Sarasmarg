@@ -40,7 +40,7 @@ app.use(cookieParser("This is my secret!"));
 // setting up the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
-
+// fetch("https://sarasmarg.herokuapp.com/data").then(req => req.text()).then(console.log)
 const cors = require('cors');
 app.use(cors({
   origin: '*'
@@ -49,6 +49,8 @@ app.use(cors({
 app.use(bodyparser.urlencoded({
   extended: true
 }))
+
+app.use(express.json());
 
 //we need express session before we use passport session
 
