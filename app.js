@@ -304,14 +304,14 @@ app.post('/user/signup', async function (req, res) {
 
     if (err) {
       console.log('Error while creating user', err);
-     return res.json({
+     return res.status(404).json({
         success: false,
         message: "Your account can not be made",
         error: err
       });
     } else {
 
-     return res.json({
+     return res.status(200).json({
         success: true,
         message: "You account is successfully created",
         user: user
@@ -325,7 +325,7 @@ app.post('/user/signin', async function (req, res, next) {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
 
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "Problem in signin",
         error: err
@@ -333,7 +333,7 @@ app.post('/user/signin', async function (req, res, next) {
     }
     if (!user) {
 
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "Wrong Username/Password!"
       });
@@ -342,7 +342,7 @@ app.post('/user/signin', async function (req, res, next) {
     req.login(user, err => {
 
       if (err) {
-        return res.json({
+        return res.status(404).json({
           success: false,
           message: "Problem in signin-2",
           error: err
