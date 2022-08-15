@@ -7,7 +7,7 @@
 // http://www.google.com/maps/place/lat,lng
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 443;
 
 const path = require('path');
 const passport = require('passport');
