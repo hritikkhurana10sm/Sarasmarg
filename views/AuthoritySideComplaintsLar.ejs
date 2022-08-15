@@ -79,16 +79,16 @@
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/problem-categorisation-1.jpg" alt="">
+                  <img src="<%= issue.files %>" alt="">
                 </div>
 
-                <div class="swiper-slide">
+                <!-- <div class="swiper-slide">
                   <img src="assets/img/portfolio/problem-categorisation-2.jpg" alt="">
                 </div>
 
                 <div class="swiper-slide">
                   <img src="assets/img/portfolio/problem-categorisation-3.jpg" alt="">
-                </div>
+                </div> -->
 
               </div>
               <div class="swiper-pagination"></div>
@@ -100,7 +100,7 @@
               <!-- <h3><span class="badge bg-success">Approved</span></h3> -->
               <div class="div-group">
                 <form action="/AuthoritySideDashboard" method="POST">
-                    <label for="types" class="label-group" style="font-weight:700px; color: brown;">Complain Status :</label>
+                    <label for="types" class="label-group" style="font-weight:700px; color: brown;"></label>
                     <select name="status"  class="typeList" >
                         <option value="Pending" <%= issue.status == 'Pending' ? 'selected' : '' %>>Pending</option>
                         <option value="Acknowledged" <%= issue.status == 'Acknowledged' ? 'selected' : '' %>>Acknowledged</option>
@@ -110,7 +110,12 @@
                     </select>
                     <input type="hidden" name="id" value="<%= issue._id %>">
                 <!-- <input type="submit" class="submit-btn"> -->
-                <button class="submit-btn" type="submit">Save</complaint.status></button>
+                <button class="submit-btn" type="submit" style="    border: none;
+                padding: 5px 20px;
+                border-radius: 27px;
+                background-color: goldenrod;
+                color: white;
+                font-weight: 800;">Update</complaint.status></button>
                 </form>
             </div>
 
@@ -119,8 +124,8 @@
                 <li><strong>Cordinates</strong>: <%= issue.coordinates %></li>
                 <li><strong>Date</strong>: <%= issue.date %></li>
                 <li><strong>Time</strong>: <%= issue.time %></li>
-                <li><strong>User Name</strong>: <%= issue.naam %></li>
-                <li><strong>Phone</strong>: <%= issue.email %></li>
+                <li><strong>Username</strong>: <%= issue.naam %></li>
+                <li><strong>Email</strong>: <%= issue.email %></li>
               </ul>
             </div>
             <div class="portfolio-description">
@@ -137,7 +142,7 @@
 
   </main><!-- End #main -->
 
-  <div id="preloader"></div>
+  <!-- <div id="preloader"></div> -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
