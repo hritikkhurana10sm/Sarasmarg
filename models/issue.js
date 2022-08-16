@@ -41,7 +41,7 @@ const issueSchema = mongoose.Schema({
     },
     coordinates : {
         type : String,
-        default : "41°24'12.2N 2°10'26.5E"
+        default : "12.95281,77.57852"
     }
 });
 

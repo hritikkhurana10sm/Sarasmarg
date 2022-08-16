@@ -121,6 +121,23 @@ app.get('/AuthoritySideComplaintsLar.ejs' , function(req , res){
   res.render('AuthoritySideComplaintsLar');
 })
 
+app.get('/getLocation.ejs' ,async function(req , res){
+  const complaint = await issues.find().exec();
+
+  const arr = [];
+// console.log(complaint)
+for(var i = 0 ; i < complaint.length ; i++){
+  arr.push(complaint[i].coordinates);
+}
+// for(var i = 0 ; i < arr.length ; i++){
+//   console.log(i , arr[i]);
+// }
+
+     res.render('getLocation' , {
+      complaint : arr
+     })
+} )
+
 app.post('/admin/signup' , async function(req ,res){
   
   res.cookie('isLogined', false);
@@ -460,22 +477,28 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
 
   var date = new Date().toLocaleString('en-us',{day : 'numeric',month : "short", year:'numeric'})
   
-  // var hr = new Date().getHours();
-  // var min = new Date().getMinutes();
-  // var a = (hr <= 12);
-  // var str = (a == true ? 'AM' : 'PM');
-  // var time = `${hr}:${min} ${str}`
+  var st = arr.location;
+ var p = st.substr(15);
+
+ var i = 0;
+
+ while(p[i] != ' '){
+    i++;
+ }
+
+ p = p.subtr(0 , i);
 
   var time = new Date().toLocaleTimeString();
   var issue = new issues({
-    location: arr.location,
+    location: p,
     files: arr.files,
     description : arr.description,
     result : qw.id,
     naam : us.username,
     email : us.email,
     date : date,
-    time : time
+    time : time,
+    coordinates : arr.coordinates
   });
 
  console.log('complaint ' , issue);

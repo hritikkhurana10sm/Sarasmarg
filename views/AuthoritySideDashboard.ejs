@@ -48,6 +48,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto " href="/">Home</a></li>
+          <li><a class="nav-link scrollto " href="./getLocation.ejs">All Complaints</a></li>
           <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -116,7 +117,7 @@
               </div><!-- End Slides with controls -->
                 <h4>#DL403RSD</h4>
                 <h5 class=""><%= issue.location %></h5>
-                <h6>Cordinates :  <%= issue.coordinates %></h6>
+                <h6>Cordinates : <a href = "http://www.google.com/maps/place/<%= issue.coordinates %>"><%= issue.coordinates %></a></h6>
                 <h6>Date : <%= issue.date %></h6>
                 <h6>Time : <%= issue.time %></h6>
                 <h6><%= issue.description %></h6>

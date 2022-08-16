@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+  integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+  integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+  crossorigin=""></script>
+  <style>
+    #map { height: 400px; margin-top: 48px;}
+     
+ 
+  </style>
+   <link href="assets/img/favicon.png" rel="icon">
+   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+ 
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+ 
+   <!-- Vendor CSS Files -->
+   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+ 
+   <!-- Template Main CSS File -->
+   <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- ======= Top Bar ======= -->
+    <section id="topbar" class="d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">team.sarasmarg@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>(+91) 1800 5685 9658</span></i>
+        </div>
+      </div>
+    </section>
+  
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+      <div class="container d-flex align-items-center justify-content-between">
+        <a href="index.ejs" class="logo"><img src="assets/img/logo-sarasmarg-2.png" alt=""></a>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto " href="/">Home</a></li>
+            <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+  
+      </div>
+  </header><!-- End Header -->
+
+  <div class="pagetitle" >
+    <h1 style="font-size: 41px;text-align : center;color: #fb6d00;">All Complaints</h1>
+    <nav>
+     
+    </nav>
+  </div><!-- End Page Title -->
+
+  <div id="map"></div>
+
+  <script>
+
+var map = L.map('map').setView([12.95322, 77.58004], 15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 25,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+var latLon = L.latLng(12.95322, 77.58004);
+var bounds = latLon.toBounds(500); // 500 = metres
+map.panTo(latLon).fitBounds(bounds);
+
+
+const arr = [<%-complaint%>]
+for(var i = 0 ; i < arr.length ; i+=2){
+console.log([arr[i],arr[i+1]]);
+L.marker([arr[i],arr[i+1]]).addTo(map).bindPopup(`${arr[i]},${arr[i+1]}`).openPopup();
+}
+
+
+
+  </script>
+</body>
+</html>
