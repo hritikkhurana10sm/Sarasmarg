@@ -523,6 +523,15 @@ app.get('/data'  , async function(req ,res){
    })
 })
 
+app.get('/user/data' , async function(req , res){
+    
+   var complaints = await issues.find().exec();
+
+    res.json({
+        complaints : complaints
+    })
+})
+
 
 // app is listening Dude
 app.listen(port, (err) => {
