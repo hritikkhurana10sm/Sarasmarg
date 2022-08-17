@@ -477,16 +477,7 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
 
   var date = new Date().toLocaleString('en-us',{day : 'numeric',month : "short", year:'numeric'})
   
-//   var st = arr.location;
-//  var p = st.substr(15);
 
-//  var i = 0;
-
-//  while(p[i] != ' '){
-//     i++;
-//  }
-
-//  p = p.substr(0 , i);
 
   var time = new Date().toLocaleTimeString();
   var issue = new issues({

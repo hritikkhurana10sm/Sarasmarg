@@ -8,7 +8,15 @@
   <title>Sarasmarg Authority Side-Complaints</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+  integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+  integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+  crossorigin=""></script>
+  <style>
+    #map { height: 400px; }
+    </style>
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -43,12 +51,13 @@
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo"><img src="assets/img/logo-sarasmarg-2.png" alt=""></a>
+        <a href="/" class="logo"><img src="assets/img/logo-sarasmarg-2.png" alt=""></a>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto " href="/">Home</a></li>
+          <li><a class="nav-link scrollto " href="./getLocation.ejs">All Complaints</a></li>
+          <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -75,11 +84,11 @@
         <div class="row gy-4">
 
           <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper">
+            <div class="portfolio-details-slider swiper" style="height:68vh;">
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="<%= issue.files %>" alt="">
+                  <img src="<%= issue.files %>" alt="" >
                 </div>
 
                 <!-- <div class="swiper-slide">
@@ -141,6 +150,28 @@
     </section><!-- End Portfolio Details Section -->
 
   </main><!-- End #main -->
+  <h1 style="font-size: 41px;text-align : center;color: #2e85cb; ">Complaint Location</h1>
+  <div id="map" style=" margin: 13px 33px 33px 33px;"></div>
+
+  <script>
+
+var map = L.map('map').setView([<%- issue.coordinates %>], 8);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 25,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+var latLon = L.latLng(<%- issue.coordinates %>);
+var bounds = latLon.toBounds(500); // 500 = metres
+map.panTo(latLon).fitBounds(bounds);
+
+
+
+L.marker([<%- issue.coordinates %>]).addTo(map).bindPopup(`<%- issue.coordinates %>`).openPopup();
+
+
+
+
+  </script>
 
   <!-- <div id="preloader"></div> -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
