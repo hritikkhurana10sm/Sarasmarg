@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Sarasmarg-CCTV Feed</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="/" class="logo"><img src="assets/img/logo-sarasmarg-2.png" alt=""></a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="/">Home</a></li>
+          <li><a class="nav-link scrollto" href="/#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+    
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="AuthoritySideDashboard.ejs">
+          <i class="bi bi-grid"></i>
+          <span>Complaints</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="AuthoritySideCCTVFeed.ejs">
+          <i class="bi bi-grid"></i>
+          <span>Complaints through CCTV</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="getLocation.ejs">
+          <i class="bi bi-grid"></i>
+          <span>Complaints Locations</span>
+        </a>
+      </li>
+</aside><!-- End Sidebar-->
+
+<main id="main-dashboard" class="main">
+    <div class="pagetitle">
+      <h1>Complaints through CCTV</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Complaints through CCTV Feed</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+
+        <!-- Recent Sales -->
+        <div class="col">
+            <div class="card recent-sales overflow-auto">
+
+              <div class="card-body">
+                <h5 class="card-title">Complaints <span>| CCTV</span></h5>
+
+                <table class="table table-borderless datatable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Camera ID</th>
+                      <th scope="col">Coordinates</th>
+                      <th scope="col">Location</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Time</th>
+                      <th scope="col">Photo</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <%var c = 2445%>
+                    <%photage.forEach(function(cctv){%>
+
+                    
+                    <tr>
+                    
+                      <th scope="row"><a href="#">#<%= c++ %></a></th>
+                      <td><a href="#"><%= cctv.coordinates %></a></td>
+                      <td><a href="#" class="text-primary"><%= cctv.location %></a></td>
+                      <td><%= cctv.date %></td>
+                      <td><%= cctv.time %></td>
+                      <td><img src="<%= cctv.files%>" height="40px" width="60px"></td>
+                      <td><a href = "#"><span class="badge bg-success"><%= cctv.status %></span></a></td>
+                      <td><form action="/AuthoritySideCCTVSingle" method="post"><input type="hidden" name = "cid" value="<%= cctv.id%>"><button type="submit" style="border : none; text-decoration : none;background-color: white;">⚙️</submit></form></td>
+                    </tr>
+              
+                    <%})%>
+                    
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div><!-- End Recent Sales -->
+    </section>
+</main>
+</body>
+</html>

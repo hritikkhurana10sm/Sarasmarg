@@ -245,7 +245,98 @@ app.post('/AuthoritySideDashboard'  , async function(req , res){
   }
   catch (error) { console.log(error); }
 })
+
+// --------------------------- working here ----------------------
+const cctv = require('./models/cctv');
+
+
+app.get('/AuthoritySideCCTVFeed.ejs' ,async function(req , res){
+ 
+  const photage = await cctv.find().exec();
+  // console.log('photage => ', photage);
+  return res.render('AuthoritySideCCTVFeed' , {
+        photage : photage
+  });
+})
+
+
+app.post('/AuthoritySideCCTVSingle' , async function(req ,res){
+      
+  const pr = req.body.cid;
+  console.log('pr = > ' , pr);
+  const photage = await cctv.findById(pr).exec();
+
+  return res.render('AuthoritySideCCTVSingle' , {
+    issue : photage
+  })
+})
+
+// update button to update status 
+app.post('/AuthoritySideCCTVFeed'  , async function(req , res){
+  var qw = req.body.id;
+ console.log("qw => ", qw);
+  try {
+      
+      var cct = await cctv.findById(qw).exec();
+
+      cct.status = req.body.status;
+      
+
+
+      try {
+              await cct.save()
+              .then(cct => {
+                  console.log(`${cct} updated`);
+
+                  return res.redirect('./AuthoritySideCCTVFeed.ejs');
+              })
+              .catch(err => {
+                  console.log(err);
+              });;
+
+      }
+      catch (error) {
+          console.log(error);
+      }
+  }
+  catch (error) { console.log(error); }
+})
+
+
+
+// ------------------------------------------------------------------
+
+
+// api that is posting the cctv data
+app.post('/cctv' ,async function(req , res){
+  var cctvBody = req.body;
+  console.log("cctv Body =>", cctvBody);
+
+  var date = new Date().toLocaleString('en-us',{day : 'numeric',month : "short", year:'numeric'})
+  var time = new Date().toLocaleTimeString();
+  
+      var newcctv = new cctv(
+          { date : date , time : time , files : cctvBody.files , status : cctvBody.status ,coordinates : cctvBody.coordinates ,problem : cctvBody.problem  , location : cctvBody.location }
+      );
+
+      await newcctv.save()
+          .then(newcctv => {
+              console.log(`${newcctv} added`);
+              return res.status(200).json({
+                   data : newcctv
+              })
+          })
+          .catch(err => {
+              console.log(err);
+              return res.status(404).json({
+                error : err
+              })
+          });
+ 
+})
 // --------------------------------------------------------
+
+
 
 
 
