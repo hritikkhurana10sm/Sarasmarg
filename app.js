@@ -580,7 +580,8 @@ app.post('/user/issue/:id',passport.authenticate('jwt', {
     email : us.email,
     date : date,
     time : time,
-    coordinates : arr.coordinates
+    coordinates : arr.coordinates,
+    problem : arr.problem
   });
 
  console.log('complaint ' , issue);
